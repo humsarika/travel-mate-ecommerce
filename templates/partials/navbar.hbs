@@ -1,0 +1,24 @@
+
+<nav>
+    <a href="/" style="margin: 0px; z-index: 1000;">
+        <img src="/images/logo tm.png" alt="logo image"></a>
+    <div class="menu">
+        <a href='/'>Home</a>
+        <a href='/aboutus'>About</a>
+        <a href='/products'>Products</a>
+
+        <a href="/shoppingcart"> <i style="width: 3%;
+                position: relative;
+                cursor: pointer;" class=" fa fa-shopping-cart"></i></a>
+
+        <!-- <a href='#contact'>Contact</a> -->
+        {{#if isAuthenticated}}
+        <!-- Show logout button -->
+        <a id="logoutButton" href="/logout">Logout</a>
+        {{else}}
+        <!-- Show login button -->
+        <a href="/login">Login</a>
+        {{/if}}
+
+    </div>
+</nav>

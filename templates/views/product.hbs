@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+   <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Travel Mate</title>
+    <meta description="" content="">
+    <meta viewport="" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+</head>
+
+    <style>
+       body {
+              font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color:#ebebeb;
+            display: flex;
+            justify-content: center;
+            height: 80vh;
+        }
+
+        .product-detail {
+            width: 1000px;
+            display: flex;
+            background-color: #fff;
+            border-radius: 8px;
+            margin-top: 150px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .product-info .description{
+            font-size: 1.2rem;
+            color: #171717;
+        }
+
+        .product-images  {
+            padding: 20px;
+            
+
+        }
+        .product-images img{
+            width: 500px;
+            height: 550px;
+            
+        }
+
+        #main-image {
+            
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .product-info {
+            flex: 1;
+            padding: 20px;
+            text-align: left;
+
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+
+        }
+
+        .price {
+            font-size: 1.5em;
+            font-weight: bold;
+            line-height: 1;
+            margin: 0;
+            color: #d9534f;
+
+        }
+
+        p {
+            color: #555;
+
+        }
+
+        .details-section {
+            width: 100%;
+            display: inline-block;
+            vertical-align: top;
+            margin-bottom: 10px;
+        }
+
+        .details-section h3 {
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    {{> navbar}}
+
+    <div class="product-detail">
+        <div class="product-images">
+            <!-- Use {{product.imageUrl}} to access the imageUrl variable -->
+            <img id="main-image" src="{{product.imageUrl}}" alt="{{product.name}}">
+        </div>
+        <div class="product-info">
+            <!-- Use {{product.name}} and {{product.price}} to access name and price -->
+            <h2>{{product.name}}</h2>
+            <p class="price">INR {{product.price}} </p>
+            <p>Inclusive of all taxes</p>
+            <p class="description"> {{product.description}}</p>
+
+            
+
+            <!-- Add your size and quantity input fields here -->
+
+            <div class="details-section">
+                <h3>Return Policy</h3>
+                <p>We offer a hassle-free return policy within 7 days of purchase. Contact us for assistance.</p>
+            </div>
+
+            <div class="details-section">
+                <h3>Warranty</h3>
+                <p>Our products come with a 6-month warranty. For warranty-related queries, please contact our support team.</p>
+            </div>
+
+            <!-- Add more details sections as needed -->
+
+            <!-- Add your "Add to Cart" button here -->
+        </div>
+    </div>
+</body>
+<script>
+
+</script>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Travel Mate</title>
+    <meta description="" content="">
+    <meta viewport="" content="width=device-width, initial-scale=1">
+    {{!-- fav icon --}}
+    <link rel="icon" href="/images/icon.png" type="image/png" sizes="16x16">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-xyz" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet">
+
+    <style>
+        .quote img{
+            width: 520px;
+            height: 500px;
+            display: inline-block;
+
+        }
+        body{
+    margin:0;
+    overflow-x:hidden;
+    }
+    .section3-container{
+        display: flex;
+        width: 100%;
+        height: 100vh;
+    }
+
+        
+        .section3-text{
+            margin: 20px;
+            width: 60%;
+
+        }
+        .section3-text h1{
+            font-size: 5rem;
+        }
+        .section3-text h2{
+            font-size: 3rem;
+        }
+        .section3-text p{
+            font-size: 1.5rem;
+        }
+
+    .section3-container .section3-image{
+       
+        
+        
+    }
+    .section3-image img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+
+    }
+ 
+    </style>
+</head>
+
+<body>
+    <div class="herotop">
+        {{>navbar}}
+        <div class="hero">
+            <h3 class="herocap">Your gateway to hassle-free and memorable travels.</h3>
+        </div>
+    </div>
+        
+        <div class="section3-container">
+            <div class="section3-text">
+                <h2>Nevere Stop</h2>
+                <h1>Exploring</h1>
+                <p>
+                    Explore more, worry less. At Travel Mate: Pack Smart, Travel Better, we redefine your journey. Unearth the world's wonders with our travel essentials.
+                     Your adventure begins here, where exploration knows no bounds. Pack smart, travel better - your gateway to a world of possibilities
+                </p>
+                <p>Travel Mate is a one-stop solution for all your travel needs. We provide you with 
+                        the best quality products at the best prices. We have a wide range of products 
+                        ranging from backpacks to tents to sunglasses. We also provide you with the best 
+                        travel tips and hacks to make your travel experience more memorable. So, what are 
+                        you waiting for? Start exploring now!</p>
+                <button  style="width: 300px;" href="/allproducts">Explore Now</button>
+
+
+
+            </div>
+
+            <div class="section3-image">
+                <img src="/images/section3.jpg" alt="section3">
+
+            </div>
+        </div>
+            
+
+    
+    <div class="quote">
+        <a href="/products/Bagpacks"> <img src="/images/Bagpack.jpg" alt="bag"></a>
+        <a href="/products/Shoes"> <img src="/images/Shoes.jpg" alt="shoes"></a>
+        <a href="/products/Tents"> <img src="/images/tents.jpg" alt="bottle"></a>
+        <a href="/products/Sunglasses"> <img src="/images/Sunglasses.jpg" alt="sunglass"></a>
+        <a href="/products/Trolley"> <img src="/images/Trolley.jpg" alt="trolley"></a>
+        <a href=""> 
+            <video autoplay muted loop>
+                <source src="/images/packsmart.mp4" type="video/mp4">
+
+            </video>
+            </a>
+
+
+
+
+    </div>
+
+
+
+
+
+{{>footer}}
+
+
+
+
+
+    <script>
+
+        // Add a logout link
+        // const logoutButton = document.getElementById('logoutButton');
+        //logoutButton.addEventListener('click', async () => {
+           // try {
+              //  const response = await fetch('/logout', {
+              //      method: 'GET',
+                //});
+
+                //if (response.ok) {
+                   
+                  //  console.log('Logout successful');
+                   // alert("you are logged out now!")
+                   // window.location.href = '/';  // Redirect to the login page
+               // } else {
+                    
+             //       console.log('Logout failed');
+              //  }
+           // } catch (error) {
+             //   console.error(error);
+          //  }
+        //});
+
+
+
+
+    </script>
+</body>
+
+</html>

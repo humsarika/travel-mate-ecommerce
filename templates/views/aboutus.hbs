@@ -1,0 +1,88 @@
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>About Us</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style/style.css">
+    <style>
+       
+        .abouttext{
+            
+            margin-left: 11%;
+            /* margin-top: -24%; */
+            /* background-color: rgba(176, 174, 174, 0.8); */
+            height: 300px;
+            width: 500px;
+            z-index: 10;
+       }
+       .abouttext h3{
+        font-size: 35px;
+            color: black;
+       }
+        .abouttext .person-data{
+            font-size: 18px;
+            margin-bottom: 5%;
+        }
+        .email,.phone,.address{
+            text-align: left;
+            font-weight: 300;
+            font-size: 14px;       
+        }
+    </style>
+</head>
+
+<body>
+    {{>navbar}}
+    <!-- about us -->
+        
+        
+    
+    <div class="aboutpage">
+        <div><h1>Meet Developers</h1></div>
+        <div class="about">
+            <div class="abtimg"><img src="/images/sarikakushwaha.jpg" alt=""></div>
+            <div class="abouttext">
+                <h3 >Sarika Kushwaha</h3>
+                <p class="person-data">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum voluptate ea repudiandae tenetur?
+                     Porro, iure nesciunt consectetur sequi expedita nihil repudiandae esse placeat velit libero, 
+                    in voluptatibus unde excepturi minus consequunture.</p>
+                    <p class="email">sarika.vsa01@gmail.com</p>
+                    <p class="phone">6265899204</p>
+                    <p class="address">Rewa, India</p>
+
+            </div>
+        </div>
+        <div class="about">
+            <div class="abtimg"><img  src="./images/samiksha.jpg" alt=""></div>
+            <div class="abouttext">
+                <h3 >Samiksha Bhatnagar</h3>
+                <p class="person-data">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum voluptate ea repudiandae tenetur?
+                     Porro, iure nesciunt esse placeat velit libero, in voluptatibus unde excepturi minus consequuntur, neque quo vitae omnis quasi reiciendis ea aspernatur atque.</p>
+                     <p class="email">201B235@juetguna.in</p>
+                    <p class="phone">123458589</p>
+                    <p class="address">Pali, India</p>
+            </div>
+                    
+        </div>
+        <div class="about">
+            <div class="abtimg"><img src="./images/drishti.jpg" alt=""></div>
+            <div class="abouttext">
+                <h3 >Drishti Sah</h3>
+                <p class="person-data">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum voluptate ea repudiandae tenetur?
+                     Porro, iure nesciunt consectetur sequi expedita nihil repudiandae esse placeat velit libero, 
+                    in voluptatibus unde excepturi minus consequuntur, neque quo vitae omnis quasi reiciendis ea aspernatur atque.</p>
+                    <p class="email">201B105@juetguna.in</p>
+                    <p class="phone">1253456555</p>
+                    <p class="address">Mumbai, India</p>
+            </div>
+        </div>
+    </div>
+    {{>footer}}
+
+</body>
+
+</html>

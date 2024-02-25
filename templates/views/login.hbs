@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Login</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: url('/images/friends.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      margin: 0;
+      padding: 0;
+
+    }
+
+    
+    
+    .login-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+  div.form{
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    min-width: 300px;
+  }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    form > * {
+      margin: 10px 0;
+    }
+
+    h1 {
+      margin: 0;
+      color: #333;
+  }
+    input {
+      width: 60%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      color: rgb(71, 72, 72);
+    }
+
+    button {
+      background-color: #f4a033;
+      color: #fff;
+      padding: 13px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 64%;
+      font-size: 18px;
+    }
+
+    button:hover {
+      background-color: rgb(220, 142, 25);
+    }
+
+    #error-message-container {
+      color: red;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    a {
+      display: block;
+      margin-top: 10px;
+      color: #007BFF;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+  <div>
+  <a href="/" style="margin: 0px;">
+    <img src="/images/logo tm.png" alt="logo image">
+  </a>
+  </div>
+  <div class="form">
+  <form action="/login" method="POST" id="login-form">
+
+    <input type="text" id="email" name="email" placeholder="Email" required>
+    <br>
+    <input type="password" id="password" name="password" placeholder="Password" required>
+    <br>
+    <button type="submit">Login</button>
+    <a href="/">Go to homepage</a><a href="/signup">Or sign up</a>
+
+  </form>
+  </div>
+  </div>
+  <!-- Display error message if login fails -->
+  {{#if error}}
+  <p class="error">Login failed. Please check your credentials.</p>
+  {{/if}}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('login-form');
+
+      loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        const userData = {
+          email,
+          password,
+        };
+
+        try {
+          const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+          });
+
+          if (response.status === 200) {
+            // Successful login
+            console.log('Login successful');
+            window.location.href = '/';  // Redirect to the home page
+          } else {
+            // Authentication failed, handle the error
+            console.log('Login failed');
+            const errorData = await response.json();
+            if (errorData && errorData.message) {
+              // Display a user-friendly error message on the form
+              document.getElementById('error-message').textContent = errorData.message;
+            }
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    });
+
+  </script>
+
+</body>
+
+</html>

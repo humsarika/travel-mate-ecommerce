@@ -1,0 +1,142 @@
+<!-- shoppingcart.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cart</title>
+    <meta description="" content="">
+    <meta viewport="" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+    <style>
+        /* Add your styles here */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 150px;
+            color: #333;
+        }
+
+        #cart-items {
+            max-width: 700px;
+            margin: 0 auto;
+            margin-bottom: 50px;
+        }
+
+        .cart-item {
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-item-img  img{
+            width: 120px;
+            height: 120px;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+        
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item p {
+            margin: 5px 0;
+        }
+
+        #totalprice {
+            font-weight: bold;
+            color: #4CAF50;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+
+<body>
+    {{> navbar}}
+
+    <h1>Your Cart</h1>
+    
+    <div id="cart-items">
+        <p >Total Price: {{total}}</p>
+        {{#each cartItems}}
+        <div class="cart-item">
+            
+            <div class="cart-item-img">
+                <img src="{{this.productId.imageUrl}}" alt="{{this.productId.name}}">
+            </div>
+            <div class="cart-item-details">
+                <p><b>{{this.productId.name}}</b></p>
+                <p>Size: {{this.size}}</p>
+                <p>Quantity: {{this.quantity}}</p>
+                <p>Price: {{this.price}}</p>
+            </div>
+            {{!-- delete item by product id from user --}}
+            <div class="remove-item">
+                <form action="/shoppingcart/{{this.productId._id}}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-danger"> X </button>
+                </form>
+            </div>
+
+        </div>
+        {{/each}}
+        <button onclick="location.href='/checkout'">Check Out</button>
+    </div>
+    
+    {{>footer}}
+
+    <script>
+        // delete item by product id from user
+        const removeItem = document.querySelectorAll('.remove-item');
+        removeItem.forEach((item) => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const id = e.target.getAttribute('data-id');
+                console.log(id);
+                fetch(`/shoppingcart/${id}?_method=DELETE`, {
+                    method: 'DELETE'
+                }).then((res) => {
+                    window.location.href = '/shoppingcart';
+                }).catch((err) => {
+                    console.log(err);
+                })
+            })
+        })
+       
+
+        
+
+
+    {{!-- document.addEventListener('DOMContentLoaded', async function () {
+        try {
+            const response = await fetch('/shoppingcart'); // Use the correct endpoint for your shopping cart
+            const data = await response.json();
+            console.log('Received data:', data); // Log the received data
+
+            // Access the total price and update the HTML
+            const totalPriceParagraph = document.getElementById('totalPrice');
+            totalPriceParagraph.textContent = `Total Price: ${data.totalPrice}`;
+
+        } catch (error) {
+            console.error('Error fetching cart data:', error);
+        }
+    }); --}}
+</script>
+
+
+
+</body>
+
+</html>
