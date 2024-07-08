@@ -10,8 +10,10 @@
     {{!-- fav icon --}}
     <link rel="icon" href="/images/icon.png" type="image/png" sizes="16x16">
     <link rel="stylesheet" href="/style/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-xyz" crossorigin="anonymous" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+      crossorigin="anonymous">
+
     <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet">
 
     <style>
@@ -67,13 +69,19 @@
     <div class="herotop">
         {{>navbar}}
         <div class="hero">
-            <h3 class="herocap">Your gateway to hassle-free and memorable travels.</h3>
+             
+        {{#if isAuthenticated}}
+        <p class="hellomsg"> Hello {{user.name}}</p>
+        {{else}}
+        <p class="hellomsg"> Hello Buddy</p>
+        {{/if}}
+            <h3 class="herocap">There is a whole world out there. Pack your backpack, your best friend and go.</h3>
         </div>
     </div>
         
         <div class="section3-container">
             <div class="section3-text">
-                <h2>Nevere Stop</h2>
+                <h2>Never Stop</h2>
                 <h1>Exploring</h1>
                 <p>
                     Explore more, worry less. At Travel Mate: Pack Smart, Travel Better, we redefine your journey. Unearth the world's wonders with our travel essentials.
@@ -84,8 +92,7 @@
                         ranging from backpacks to tents to sunglasses. We also provide you with the best 
                         travel tips and hacks to make your travel experience more memorable. So, what are 
                         you waiting for? Start exploring now!</p>
-                <button  style="width: 300px;" href="/allproducts">Explore Now</button>
-
+                <button  style="width: 300px;" onclick="location.href='/products'">Explore Now</button>
 
 
             </div>
@@ -101,8 +108,8 @@
     <div class="quote">
         <a href="/products/Bagpacks"> <img src="/images/Bagpack.jpg" alt="bag"></a>
         <a href="/products/Shoes"> <img src="/images/Shoes.jpg" alt="shoes"></a>
-        <a href="/products/Tents"> <img src="/images/tents.jpg" alt="bottle"></a>
-        <a href="/products/Sunglasses"> <img src="/images/Sunglasses.jpg" alt="sunglass"></a>
+        <a href="/products/Tents"> <img src="/images/Tents.jpg" alt="Tents"></a>
+        <a href="/products/Sunglasses"> <img src="/images/Sunglasses.jpg" alt="sunglasses"></a>
         <a href="/products/Trolley"> <img src="/images/Trolley.jpg" alt="trolley"></a>
         <a href=""> 
             <video autoplay muted loop>

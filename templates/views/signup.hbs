@@ -117,33 +117,8 @@
 
         <div><span class="redstar" style="color: red;">*</span><input type="tel" id="mobileNumber" name="mobileNumber"
             pattern="[0-9]{10}" placeholder="Mobile" required></div>
-        <div><span class="redstar" style="color: red;">*</span><input type="text" id="addressline1" name="addressline1"
-            placeholder="Address line 1" required></div>
-        <div><input type="text" id="addressline2" name="addressline2" placeholder="Address line 2 (optional)"></div>
-        <div><input type="text" id="landmark" name="landmark" placeholder="Landmark (optional)"></div>
-
-        <div class="form-row">
-          <div>
-            <span class="redstar" style="color: red;">*</span>
-            <input type="text" id="zipCode" name="zipCode" placeholder="Zipcode" required>
-          </div>
-          <div>
-            <span class="redstar" style="color: red;">*</span>
-            <input type="text" id="city" name="city" placeholder="City" required>
-          </div>
-        </div>
-
-        <div class="form-row">
-
-          <div>
-            <span class="redstar" style="color: red;">*</span>
-            <input type="text" id="state" name="state" placeholder="State" required>
-          </div>
-          <div>
-            <span class="redstar" style="color: red;">*</span>
-            <input type="text" id="country" name="country" placeholder="Country" required>
-          </div>
-        </div>
+        
+    
 
 
         <button type="submit">Sign Up</button>
@@ -165,24 +140,12 @@
       const name = document.getElementById('name').value;
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
-      const city = document.getElementById('city').value;
-      const state = document.getElementById('state').value;
-      const zipCode = document.getElementById('zipCode').value;
-      const landmark = document.getElementById('landmark').value;
       const mobileNumber = document.getElementById('mobileNumber').value;
       
       const userData = {
         name,
         email,
         password,
-        address: {
-          line1: addressLine1,
-          line2: addressLine2,
-          city,
-          state,
-          zipCode,
-          landmark,
-        },
         mobileNumber,
       };
 
@@ -197,6 +160,7 @@
 
         if (response.status === 200) {
           console.log('User registered successfully');
+          window.location.href = '/login'; // Redirecting to homepage or login page
         } else {
           console.error('User not registered successfully');
         }

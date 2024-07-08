@@ -5,7 +5,7 @@ const productSchema = new mongoose.Schema({
   description: String,
   price: Number,
   imageUrl: String,
-  producTtype:String,
+  productType:String,
 });
 
 // Create and export the Product model

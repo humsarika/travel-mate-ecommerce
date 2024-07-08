@@ -47,12 +47,21 @@ nav a {
   font-size: 1.6rem;
   color: #000;
 }
+/* hello msg to user */
+.hellomsg{
+  padding-top: 10%;
+  font-size: 3rem;
+  max-width: 70%;
+  color: #000000;
+  padding-left: 10%;
 
+}
 .herocap {
-  padding-top: 13%;
+  /* padding-top: 13%; */
   font-size: 4.5rem;
   max-width: 70%;
-  color: #13131a;
+  /* text shadow */
+  text-shadow: 2px 4px 10px #bdbdbd;
   padding-left: 10%;
   /* padding-bottom: 0.5rem; */
 }

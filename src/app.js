@@ -2,7 +2,8 @@ const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const flash = require('express-flash');
+const flash = require("express-flash");
+const authMiddleware = require('./middleware/auth');
 const path = require("path");
 require("./db/connection");
 const Product = require("./models/products");
@@ -11,16 +12,15 @@ const User = require("./models/user");
 const hbs = require("hbs");
 const bodyParser = require("body-parser");
 // const cors = require("cors");
-const crypto = require("crypto");
+
+const methodOverride = require("method-override");
+const cartRoutes = require("./routes/cart");
 
 // const bcrypt = require('bcrypt');
 const app = express();
 
 const port = process.env.PORT || 3000;
 
-//  a secure random key
-const secretKey = crypto.randomBytes(6).toString("hex");
-console.log("Secret Key:", secretKey);
 
 // setting the path for css file
 const staticpath = path.join(__dirname, "../public");
@@ -29,6 +29,9 @@ const templatepath = path.join(__dirname, "../templates/views");
 const partialpath = path.join(__dirname, "../templates/partials");
 
 // middleware
+app.use(authMiddleware);
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 app.use(express.static(staticpath));
 app.use(bodyParser.json());
 // app.use(cors());
@@ -36,10 +39,11 @@ app.set("view engine", "hbs");
 app.set("views", templatepath);
 hbs.registerPartials(partialpath);
 app.use(flash());
+app.use(authMiddleware);
 
 app.use(
   session({
-    secret: secretKey, // secret key for session encryption
+    secret: process.env.SESSION_SECRET,
     resave: false, //not saving session data if nothing has changed
     saveUninitialized: true, // Saving session data for new sessions
   })
@@ -50,52 +54,57 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Configure the Local Strategy
-passport.use(new LocalStrategy({
-  usernameField: "email",
-  passwordField: "password",
-},
-async (email, password, done) => {
-  try {
-    const user = await User.findOne({ email });
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+    },
+    async (email, password, done) => {
+      try {
+        const user = await User.findOne({ email });
 
-    if (user) {
-      if (user.password === password) {
-        console.log(`User ${user.email} logged in successfully.`);
-        return done(null, user);
-      } else {
-        console.log(`Login attempt failed for user ${user.email}. Incorrect password.`);
-        return done(null, false, { message: "Incorrect password" });
+        if (user) {
+          if (user.password === password) {
+            console.log(`User ${user.email} logged in successfully.`);
+            return done(null, user);
+          } else {
+            console.log(
+              `Login attempt failed for user ${user.email}. Incorrect password.`
+            );
+            return done(null, false, { message: "Incorrect password" });
+          }
+        } else {
+          console.log(
+            `Login attempt failed. User with email ${email} not found.`
+          );
+          return done(null, false, { message: "User not found" });
+        }
+      } catch (error) {
+        console.error(`Error during login: ${error}`);
+        return done(error);
       }
-    } else {
-      console.log(`Login attempt failed. User with email ${email} not found.`);
-      return done(null, false, { message: "User not found" });
     }
-  } catch (error) {
-    console.error(`Error during login: ${error}`);
-    return done(error);
-  }
-}));
-
-
+  )
+);
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id).exec()
-    .then(user => {
+  User.findById(id)
+    .exec()
+    .then((user) => {
       if (!user) {
         return done(null, false);
       }
       return done(null, user);
     })
-    .catch(err => {
+    .catch((err) => {
       return done(err);
     });
 });
-
-
 
 // variables
 // const userId = null;
@@ -104,14 +113,21 @@ passport.deserializeUser((id, done) => {
 // routes
 // app.get(path , callback function)
 
+
+// // test hbs
+// app.get('/profile', (req, res) => {
+//   console.log(req.user); // Log the user object to inspect its contents
+//   res.render('test', { user: req.user }); // Render your template with `req.user` passed as data
+// });
+
 // display home page
 app.get("/", (req, res) => {
-  res.render("index", { isAuthenticated: req.isAuthenticated() });
+  res.render("index", { isAuthenticated: req.isAuthenticated(),  user: req.user });
 });
 
 app.get("/aboutus", (req, res) => {
   // display about page
-  res.render("aboutus",{ isAuthenticated: req.isAuthenticated() });
+  res.render("aboutus", { isAuthenticated: req.isAuthenticated() });
 });
 // app.get("/shoppingcart", (req, res) => {
 //   //display shopping cart
@@ -126,12 +142,15 @@ app.get("/signup", (req, res) => {
   res.render("signup");
 });
 
-
 // Creating a route to retrieve and display products
 app.get("/products", (req, res) => {
-  Product.find({}).limit(50)
+  Product.find({})
+    .limit(50)
     .then((products) => {
-      res.render("allproducts", { products, isAuthenticated: req.isAuthenticated() });
+      res.render("allproducts", {
+        products,
+        isAuthenticated: req.isAuthenticated(),
+      });
 
       // res.json(products); // res.json() to send JSON response
     })
@@ -143,22 +162,23 @@ app.get("/products", (req, res) => {
 
 // Creating a route to retrieve and display products by category
 app.get("/products/:category", async (req, res) => {
-  const category = req.params.category; 
+  const category = req.params.category;
 
   try {
-    const query = { category: category }; 
+    const query = { category: category };
 
     const products = await Product.find(query);
 
-    res.render("allproducts", { products, currentCategory: category, isAuthenticated: req.isAuthenticated() });
+    res.render("allproducts", {
+      products,
+      currentCategory: category,
+      isAuthenticated: req.isAuthenticated(),
+    });
   } catch (err) {
     console.error("Error retrieving products:", err);
     res.status(500).json({ error: "Could not retrieve products" });
   }
 });
-
-
-
 
 // app.get('/getcartItems', async (req, res) => {
 //   try {
@@ -179,8 +199,6 @@ const authenticateUser = (req, res, next) => {
   res.redirect("/login"); // Redirect to login page if not authenticated
 };
 
-
-
 app.get("/shoppingcart", authenticateUser, async (req, res) => {
   if (!req.isAuthenticated()) {
     return res.status(401).json({ error: "Unauthorized" });
@@ -196,11 +214,16 @@ app.get("/shoppingcart", authenticateUser, async (req, res) => {
     });
 
     if (!cart) {
-      return res.status(404).render("emptycart", { isAuthenticated: req.isAuthenticated() });
+      return res
+        .status(404)
+        .render("emptycart", { isAuthenticated: req.isAuthenticated() });
     }
 
     // Calculate the total cart price
-    const total = cart.items.reduce((acc, item) => acc + item.quantity * item.productId.price, 0);
+    const total = cart.items.reduce(
+      (acc, item) => acc + item.quantity * item.productId.price,
+      0
+    );
 
     // Render the shopping cart page with cart items and total
     res.render("shoppingcart", {
@@ -213,9 +236,6 @@ app.get("/shoppingcart", authenticateUser, async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
-
-
 
 // display product by id route
 app.get("/product/:productId", async (req, res) => {
@@ -233,8 +253,6 @@ app.get("/product/:productId", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
-
 
 // const newProduct = new Product({
 //   name: 'hoodie-men-2',
@@ -265,23 +283,21 @@ app.post("/usersignup", async (req, res) => {
     if (existingUser) {
       console.log("user already exist");
       return res.status(400);
-      
     }
 
     const newUser = new User(userData);
 
     await newUser.save();
-    res.redirect('/');
+    res.redirect("/login");
     res.status(200);
     console.log("user registered susscessfully");
   } catch (error) {
     console.error(error);
     res.status(500);
+    res.redirect("/signup");
     console.log("Registration failed. Please try again.");
   }
 });
-
-
 
 app.post(
   "/login",
@@ -292,26 +308,25 @@ app.post(
   })
 );
 
-app.get('/logout', (req, res) => {
+app.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) {
       console.error(err);
-      return res.status(500).send('Internal server error');
+      return res.status(500).send("Internal server error");
       // console.log('Logout failed');
     }
-    res.redirect('/'); 
-    console.log('Logout successful');
+    res.redirect("/");
+    console.log("Logout successful");
     // Redirect to the login page after logout
   });
 });
 
-
 //add-to-cart route
-app.post('/add-to-cart', async (req, res) => {
-  const userId = req.user._id; 
+app.post("/add-to-cart", async (req, res) => {
+  console.log("User:", req.user.name);
 
-  const { productId, size, quantity, price } = req.body;
-  console.log('Received request to add to cart:', req.body);
+  const {productId, size, quantity, price } = req.body;
+  console.log("Request to add to cart:", req.body);
 
   try {
     // Find or create user's cart
@@ -322,7 +337,9 @@ app.post('/add-to-cart', async (req, res) => {
     }
 
     // Checking if the product is already in the user's cart
-    const existingCartItem = cart.items.find(item => item.productId === productId && item.size === size);
+    const existingCartItem = cart.items.find(
+      (item) => item.productId === productId && item.size === size
+    );
 
     if (existingCartItem) {
       // If the product is already in the cart, update the quantity
@@ -338,6 +355,7 @@ app.post('/add-to-cart', async (req, res) => {
       };
 
       cart.items.push(newCartItem);
+      console.log("item added to " + req.user.name + "'s cart successfully: ")
     }
 
     // Update the total price
@@ -346,47 +364,18 @@ app.post('/add-to-cart', async (req, res) => {
     // Save the cart to the database
     await cart.save();
 
-    res.status(200).json({ message: 'Added to cart successfully' });
+    res.status(200).json({ message: "Added to cart successfully" });
   } catch (error) {
-    console.error('Error adding item to cart:', error);
-    res.status(500).json({ error: 'Could not add item to cart' });
+    console.error("Error adding item to cart:", error);
+    res.status(500).json({ error: "Could not add item to cart" });
   }
 });
-
-
-// Delete item from the cart
-app.delete('/remove/:productId/from/:userId', async (req, res) => {
-  const { productId, userId } = req.params;
-  console.log('Received request to delete item from cart:', req.params);
-
-  try {
-    const cart = await cartItem.findOne({ userId });
-
-    if (!cart) {
-      return res.status(404).json({ error: 'Cart not found' });
-    }
-
-    // Remove the item from the cart
-    cart.items = cart.items.filter(item => item.productId !== productId);
-
-    // Update the total price
-    cart.totalPrice = cart.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-
-    // Save the updated cart to the database
-    await cart.save();
-
-    res.status(200).json({ message: 'Item deleted from the cart' });
-  } catch (error) {
-    console.error('Error deleting item from cart:', error);
-    res.status(500).json({ error: 'Could not delete item from cart' });
-  }
-}
-);
-
+// deleting from cart
+app.use('/cart', cartRoutes);
 
 app.get("*", (req, res) => {
   //display signup page
-  res.render("404page",{ isAuthenticated: req.isAuthenticated() });
+  res.render("404page", { isAuthenticated: req.isAuthenticated() });
 });
 
 app.listen(port, () => {
