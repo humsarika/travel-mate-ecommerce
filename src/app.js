@@ -41,9 +41,11 @@ hbs.registerPartials(partialpath);
 app.use(flash());
 app.use(authMiddleware);
 
+const secretKey = crypto.randomBytes(6).toString("hex");
+
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: secretKey,
     resave: false, //not saving session data if nothing has changed
     saveUninitialized: true, // Saving session data for new sessions
   })
