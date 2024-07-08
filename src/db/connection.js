@@ -1,22 +1,16 @@
-// connection.js
 
 const mongoose = require("mongoose");
-require('dotenv').config();
-
-// Use environment variable for MongoDB Atlas connection string
-const uri = process.env.ATLAS_URI;
 
 
-
-// Connect to MongoDB Atlas
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => {
-  console.log("Connection to MongoDB Atlas is successful");
-}).catch((error) => {
-  console.error("Error connecting to MongoDB Atlas:", error);
-});
+// creating database
+mongoose.connect("mongodb://127.0.0.1:27017/travelmate",{
+  useNewUrlParser:true,
+  useUnifiedTopology : true
+}).then(()=>{
+    console.log("connection to mongodb is successful");
+}).catch((error)=>{
+    console.log(error)
+})
 
 
 // // Define your product schema and model

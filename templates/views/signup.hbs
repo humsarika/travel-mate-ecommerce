@@ -14,9 +14,9 @@
       background-repeat: no-repeat;
       margin: 0;
       padding: 0;
+      
     }
-
-    .signup-container {
+    .signup-container{
       display: flex;
       justify-content: center;
       align-items: center;
@@ -24,16 +24,19 @@
       min-height: 80vh;
     }
 
-    form>* {
+    
+
+    form > * {
       margin: 10px 0;
     }
 
     h1 {
       margin: 0;
       color: #333;
-    }
+  }
 
     form {
+
       background-color: rgba(255, 255, 255, 0.8);
       padding: 80px;
       border-radius: 10px;
@@ -69,6 +72,7 @@
       width: 64%;
       font-size: 18px;
     }
+
 
     button:hover {
       background-color: rgb(220, 142, 25);
@@ -115,8 +119,39 @@
             placeholder="Email" required></div>
         <div><span class="redstar" style="color: red;">*</span><input type="password" id="password" name="password"
             placeholder="Password" required></div>
+        {{!-- <div><span class="redstar" style="color: red;">*</span><input type="password" id="confirmPassword"
+            name="confirmPassword" placeholder="Confirm Password" required></div> --}}
+
         <div><span class="redstar" style="color: red;">*</span><input type="tel" id="mobileNumber" name="mobileNumber"
             pattern="[0-9]{10}" placeholder="Mobile" required></div>
+        <div><span class="redstar" style="color: red;">*</span><input type="text" id="addressline1" name="addressline1"
+            placeholder="Address line 1" required></div>
+        <div><input type="text" id="addressline2" name="addressline2" placeholder="Address line 2 (optional)"></div>
+        <div><input type="text" id="landmark" name="landmark" placeholder="Landmark (optional)"></div>
+
+        <div class="form-row">
+          <div>
+            <span class="redstar" style="color: red;">*</span>
+            <input type="text" id="zipCode" name="zipCode" placeholder="Zipcode" required>
+          </div>
+          <div>
+            <span class="redstar" style="color: red;">*</span>
+            <input type="text" id="city" name="city" placeholder="City" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+
+          <div>
+            <span class="redstar" style="color: red;">*</span>
+            <input type="text" id="state" name="state" placeholder="State" required>
+          </div>
+          <div>
+            <span class="redstar" style="color: red;">*</span>
+            <input type="text" id="country" name="country" placeholder="Country" required>
+          </div>
+        </div>
+
 
         <button type="submit">Sign Up</button>
         <a href="/login">Already a user? Sign in</a>
@@ -125,6 +160,7 @@
     </div>
 
   </div>
+
 
   <div id="error-message-container"></div>
 
@@ -136,12 +172,24 @@
       const name = document.getElementById('name').value;
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
+      const city = document.getElementById('city').value;
+      const state = document.getElementById('state').value;
+      const zipCode = document.getElementById('zipCode').value;
+      const landmark = document.getElementById('landmark').value;
       const mobileNumber = document.getElementById('mobileNumber').value;
 
       const userData = {
         name,
         email,
         password,
+        address: {
+          line1: addressLine1,
+          line2: addressLine2,
+          city,
+          state,
+          zipCode,
+          landmark,
+        },
         mobileNumber,
       };
 
@@ -156,22 +204,14 @@
 
         if (response.status === 200) {
           console.log('User registered successfully');
-          window.location.href = '/login'; // Redirect to homepage or login page
         } else {
-          const errorMessage = await response.json(); // Assuming server sends error message as JSON
-          console.error('User not registered:', errorMessage);
-          showError(errorMessage); // Function to display error message
+          console.error('User not registered successfully');
         }
       } catch (error) {
-        console.error('Error during signup:', error);
-        showError('Failed to register. Please try again later.');
+        console.error(error);
       }
     });
 
-    function showError(message) {
-      const errorMessageContainer = document.getElementById('error-message-container');
-      errorMessageContainer.innerHTML = `<div class="alert alert-danger">${message}</div>`;
-    }
   </script>
   <script src="/js/scripts.js"></script>
 </body>

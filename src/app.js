@@ -12,8 +12,7 @@ const hbs = require("hbs");
 const bodyParser = require("body-parser");
 // const cors = require("cors");
 const crypto = require("crypto");
-const methodOverride = require('method-override');
-const cartRoutes = require('./routes/cart');
+
 // const bcrypt = require('bcrypt');
 const app = express();
 
@@ -21,6 +20,7 @@ const port = process.env.PORT || 3000;
 
 //  a secure random key
 const secretKey = crypto.randomBytes(6).toString("hex");
+console.log("Secret Key:", secretKey);
 
 // setting the path for css file
 const staticpath = path.join(__dirname, "../public");
@@ -29,8 +29,6 @@ const templatepath = path.join(__dirname, "../templates/views");
 const partialpath = path.join(__dirname, "../templates/partials");
 
 // middleware
-app.use(express.urlencoded({ extended: true })); 
-app.use(methodOverride('_method'));
 app.use(express.static(staticpath));
 app.use(bodyParser.json());
 // app.use(cors());
@@ -97,11 +95,6 @@ passport.deserializeUser((id, done) => {
     });
 });
 
-//functions 
-// Example utility function to calculate total price of items in the cart
-// function calculateTotalPrice(items) {
-//   return items.reduce((total, item) => total + (item.price * item.quantity), 0);
-// }
 
 
 // variables
@@ -132,6 +125,7 @@ app.get("/signup", (req, res) => {
   //display signup page
   res.render("signup");
 });
+
 
 // Creating a route to retrieve and display products
 app.get("/products", (req, res) => {
@@ -164,6 +158,19 @@ app.get("/products/:category", async (req, res) => {
 });
 
 
+
+
+// app.get('/getcartItems', async (req, res) => {
+//   try {
+//     const cartItems = await cartItem.find({}); // Fetch all cart items from the database
+
+//     // Render the cart.hbs template with the cartItems data
+//     res.render('shoppingcart', { cartItems });
+//   } catch (error) {
+//     console.error('Error fetching cart items:', error);
+//     res.status(500).send('An error occurred while fetching cart items.');
+//   }
+// });
 // user authentication
 const authenticateUser = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -181,6 +188,7 @@ app.get("/shoppingcart", authenticateUser, async (req, res) => {
 
   try {
     const userId = req.user._id;
+
     // Fetch the cart items for the user and populate product details
     const cart = await cartItem.findOne({ userId }).populate({
       path: "items.productId",
@@ -218,7 +226,7 @@ app.get("/product/:productId", async (req, res) => {
       console.log("product not found");
       return res.status(404).json({ error: "Product not found" });
     }
-    console.log("product ji" , product);
+    console.log(product);
     res.render("product", { product });
   } catch (error) {
     console.error("Error fetching product:", error);
@@ -291,7 +299,7 @@ app.get('/logout', (req, res) => {
       return res.status(500).send('Internal server error');
       // console.log('Logout failed');
     }
-    res.redirect('/login'); 
+    res.redirect('/'); 
     console.log('Logout successful');
     // Redirect to the login page after logout
   });
@@ -300,63 +308,80 @@ app.get('/logout', (req, res) => {
 
 //add-to-cart route
 app.post('/add-to-cart', async (req, res) => {
-  console.log('User:', req.user.name);
-const userId = req.user._id ? req.user._id : null;
-  console.log("user id" , userId)
-  if(!userId){
-    res.render('login');
-    console.log("user not logged in");
-  }
-  else{
+  const userId = req.user._id; 
 
-    const { productId, size, quantity, price } = req.body;
-    console.log('Received request to add to cart:', req.body);
-  
-    try {
-      // Find or create user's cart
-      let cart = await cartItem.findOne({ userId });
-  
-      if (!cart) {
-        cart = new cartItem({ userId });
-      }
-  
-      // Checking if the product is already in the user's cart
-      const existingCartItem = cart.items.find(item => item.productId === productId && item.size === size);
-  
-      if (existingCartItem) {
-        // If the product is already in the cart, update the quantity
-        existingCartItem.quantity += parseInt(quantity);
-        existingCartItem.price = parseInt(price); // Set the price
-      } else {
-        // If the product is not in the cart, create a new cart item
-        const newCartItem = {
-          productId,
-          size,
-          quantity: parseInt(quantity),
-          price: parseInt(price),
-        };
-  
-        cart.items.push(newCartItem);
-      }
-  
-      // Update the total price
-      cart.totalPrice += parseInt(price) * parseInt(quantity);
-  
-      // Save the cart to the database
-      await cart.save();
-  
-      res.status(200).json({ message: 'Added to cart successfully' });
-      console.log("Added to cart successfully")
-    } catch (error) {
-      console.error('Error adding item to cart:', error);
-      res.status(500).json({ error: 'Could not add item to cart' });
+  const { productId, size, quantity, price } = req.body;
+  console.log('Received request to add to cart:', req.body);
+
+  try {
+    // Find or create user's cart
+    let cart = await cartItem.findOne({ userId });
+
+    if (!cart) {
+      cart = new cartItem({ userId });
     }
+
+    // Checking if the product is already in the user's cart
+    const existingCartItem = cart.items.find(item => item.productId === productId && item.size === size);
+
+    if (existingCartItem) {
+      // If the product is already in the cart, update the quantity
+      existingCartItem.quantity += parseInt(quantity);
+      existingCartItem.price = parseInt(price); // Set the price
+    } else {
+      // If the product is not in the cart, create a new cart item
+      const newCartItem = {
+        productId,
+        size,
+        quantity: parseInt(quantity),
+        price: parseInt(price),
+      };
+
+      cart.items.push(newCartItem);
+    }
+
+    // Update the total price
+    cart.totalPrice += parseInt(price) * parseInt(quantity);
+
+    // Save the cart to the database
+    await cart.save();
+
+    res.status(200).json({ message: 'Added to cart successfully' });
+  } catch (error) {
+    console.error('Error adding item to cart:', error);
+    res.status(500).json({ error: 'Could not add item to cart' });
   }
-  
 });
 
+
 // Delete item from the cart
-app.use('/cart', cartRoutes);
+app.delete('/remove/:productId/from/:userId', async (req, res) => {
+  const { productId, userId } = req.params;
+  console.log('Received request to delete item from cart:', req.params);
+
+  try {
+    const cart = await cartItem.findOne({ userId });
+
+    if (!cart) {
+      return res.status(404).json({ error: 'Cart not found' });
+    }
+
+    // Remove the item from the cart
+    cart.items = cart.items.filter(item => item.productId !== productId);
+
+    // Update the total price
+    cart.totalPrice = cart.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+    // Save the updated cart to the database
+    await cart.save();
+
+    res.status(200).json({ message: 'Item deleted from the cart' });
+  } catch (error) {
+    console.error('Error deleting item from cart:', error);
+    res.status(500).json({ error: 'Could not delete item from cart' });
+  }
+}
+);
 
 
 app.get("*", (req, res) => {
