@@ -91,6 +91,12 @@
                     <button type="submit">Remove</button>
                 </form>
             </div>
+            {{!-- delete item by product id from user --}}
+            <div class="remove-item">
+                <form action="/shoppingcart/{{this.productId._id}}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-danger"> X </button>
+                </form>
+            </div>
 
         </div>
         {{/each}}
