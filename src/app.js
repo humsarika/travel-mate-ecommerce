@@ -5,6 +5,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const flash = require("express-flash");
 const authMiddleware = require('./middleware/auth');
 const path = require("path");
+
 require("./db/connection");
 const Product = require("./models/products");
 const cartItem = require("./models/cart");
@@ -12,11 +13,11 @@ const User = require("./models/user");
 const hbs = require("hbs");
 const bodyParser = require("body-parser");
 // const cors = require("cors");
-
+const crypto = require("crypto");
 const methodOverride = require("method-override");
 const cartRoutes = require("./routes/cart");
 
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const app = express();
 
 const port = process.env.PORT || 3000;
