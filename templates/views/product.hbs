@@ -3,103 +3,97 @@
 
 
 <head>
-    <meta charset="utf-8">
+   <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Travel Mate</title>
     <meta description="" content="">
     <meta viewport="" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
     <link rel="stylesheet" href="/style/style.css">
-    <link rel="stylesheet" href="/style/navbar.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
 </head>
 
-<style>
-    body {
-        font-family: sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #ebebeb;
-        display: flex;
-        justify-content: center;
-        height: 80vh;
-    }
+    <style>
+       body {
+              font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color:#ebebeb;
+            display: flex;
+            justify-content: center;
+            height: 80vh;
+        }
 
-    .product-detail {
-        width: 1000px;
-        display: flex;
-        background-color: #fff;
-        border-radius: 8px;
-        margin-top: 150px;
-        overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+        .product-detail {
+            width: 1000px;
+            display: flex;
+            background-color: #fff;
+            border-radius: 8px;
+            margin-top: 150px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .product-info .description{
+            font-size: 1.2rem;
+            color: #171717;
+        }
 
-    .product-info .description {
-        font-size: 1.2rem;
-        color: #171717;
-    }
+        .product-images  {
+            padding: 20px;
+            
 
-    .product-images {
-        padding: 20px;
+        }
+        .product-images img{
+            width: 500px;
+            height: 550px;
+            
+        }
 
-
-    }
-
-    .product-images img {
-        width: 500px;
-        height: 550px;
-
-    }
-
-    #main-image {
-
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+        #main-image {
+            
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
 
-    .product-info {
-        flex: 1;
-        padding: 20px;
-        text-align: left;
+        .product-info {
+            flex: 1;
+            padding: 20px;
+            text-align: left;
 
-    }
+        }
 
-    h2 {
-        margin-top: 0;
-        color: #333;
+        h2 {
+            margin-top: 0;
+            color: #333;
 
-    }
+        }
 
-    .price {
-        font-size: 1.5em;
-        font-weight: bold;
-        line-height: 1;
-        margin: 0;
-        color: #d9534f;
+        .price {
+            font-size: 1.5em;
+            font-weight: bold;
+            line-height: 1;
+            margin: 0;
+            color: #d9534f;
 
-    }
+        }
 
-    p {
-        color: #555;
+        p {
+            color: #555;
 
-    }
+        }
 
-    .details-section {
-        width: 100%;
-        display: inline-block;
-        vertical-align: top;
-        margin-bottom: 10px;
-    }
+        .details-section {
+            width: 100%;
+            display: inline-block;
+            vertical-align: top;
+            margin-bottom: 10px;
+        }
 
-    .details-section h3 {
-        color: #333;
-    }
-</style>
+        .details-section h3 {
+            color: #333;
+        }
+    </style>
 </head>
 
 <body>
@@ -117,7 +111,7 @@
             <p>Inclusive of all taxes</p>
             <p class="description"> {{product.description}}</p>
 
-
+            
 
             <!-- Add your size and quantity input fields here -->
 
@@ -128,13 +122,16 @@
 
             <div class="details-section">
                 <h3>Warranty</h3>
-                <p>Our products come with a 6-month warranty. For warranty-related queries, please contact our support
-                    team.</p>
+                <p>Our products come with a 6-month warranty. For warranty-related queries, please contact our support team.</p>
             </div>
 
+            <!-- Add more details sections as needed -->
+
+            <!-- Add your "Add to Cart" button here -->
         </div>
     </div>
 </body>
-<script src="/js/scripts.js"></script>
+<script>
 
+</script>
 </html>

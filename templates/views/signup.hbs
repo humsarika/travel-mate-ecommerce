@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Signup Form</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -38,7 +37,7 @@
     form {
 
       background-color: rgba(255, 255, 255, 0.8);
-      padding: 80px;
+      padding: 50px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       text-align: center;
@@ -94,12 +93,6 @@
 
     a:hover {
       text-decoration: underline;
-    }
-
-    @media (max-width: 600px) {
-      .signup-container {
-        width: 100%;
-      }
     }
   </style>
 </head>
@@ -177,9 +170,7 @@
       const zipCode = document.getElementById('zipCode').value;
       const landmark = document.getElementById('landmark').value;
       const mobileNumber = document.getElementById('mobileNumber').value;
-      const addressLine1 = document.getElementById('addressline1').value;
-      const addressLine2 = document.getElementById('addressline2').value;
-
+      
       const userData = {
         name,
         email,
@@ -215,7 +206,6 @@
     });
 
   </script>
-  <script src="/js/scripts.js"></script>
 </body>
 
 </html>

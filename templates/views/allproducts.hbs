@@ -11,32 +11,29 @@
     <title>Product Page</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="stylesheet" href="style/style.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <style>
-        body {
+        body{
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
 
         }
-
-        nav {
-            flex-direction: row;
-            justify-content: space-around;
-            opacity: 1;
-            background: #f4a033;
-            display: flex;
-            align-items: center;
-            padding: 8px 5%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-        }
+       nav {
+        flex-direction: row;
+        justify-content: space-around;
+        opacity: 0.85;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        padding: 8px 5%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+    }
 
 
         nav a {
@@ -45,7 +42,6 @@
             font-size: 1.6rem;
             color: #000;
         }
-
         button {
             background-color: #f4a033;
             color: #fff;
@@ -55,11 +51,11 @@
             cursor: pointer;
             width: 64%;
             font-size: 18px;
-        }
+            }
 
-        button:hover {
+            button:hover {
             background-color: rgb(220, 142, 25);
-        }
+            }
 
         #product-list {
             display: grid;
@@ -81,13 +77,9 @@
         }
 
         #product-list .product .price {
-            color: #bc0808;
+            color: #f84e34;
             font-size: 16px;
             font-weight: 500;
-        }
-
-        #product-list .product .productname {
-            font-size: 14px;
         }
 
         #product-list .product img {
@@ -98,83 +90,61 @@
 
         @media (max-width: 768px) {
             #product-list {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 576px) {
-            #product-list .product .productname {
-                font-size: 12px;
-            }
-
-            #product-list .product .price {
-                font-size: 13px;
-                font-weight: 300;
-            }
-
             #product-list {
-                grid-template-columns: repeat(2, 2fr);
-                padding: 1;
-                margin: 0;
-                background: #fff;
-                border-radius: 0;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                transition: 0.5s;
+                grid-template-columns: repeat(1, 1fr);
             }
 
         }
 
         @media (max-width: 376px) {
             #product-list {
-                grid-template-columns: repeat(2, 2fr);
-                padding: 5px;
-                margin: 0;
-                background: #fff;
-                border-radius: 0;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                transition: 0.5s;
+                grid-template-columns: repeat(1, 1fr);
             }
 
         }
 
         .size-and-quantity-container {
-            display: flex;
-            justify-content: space-evenly;
-        }
+    display: flex;
+    justify-content: space-evenly;
+}
 
-        .size {
-            padding: 15px 15px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 18px;
-        }
+.size {
+    padding: 15px 15px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px;
+}
 
-        .qnty {
-            padding: 15px 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 18px;
-            width: 30px;
-        }
+.qnty {
+    padding: 15px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px;
+    width: 30px;
+}
 
-        .add-to-cart-btn {
-            background-color: #f4a033;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 15px 35px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-left: 5px;
-            width: 100%;
+.add-to-cart-btn {
+      background-color: #f4a033;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 15px 35px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+   margin-left: 5px;
+    width: 100%;
 
-
-        }
-
-        .add-to-cart-btn:hover {
-            opacity: 0.9;
-        }
+    
+}
+.add-to-cart-btn:hover{
+    opacity: 0.9;
+}
 
         input {
 
@@ -184,44 +154,44 @@
             border: none;
             border-radius: 5px;
         }
+        .footer{
+  background:#000;
+  padding:30px 0px;
+  text-align:center;
+  }
+  
+  .footer .row{
+  width:100%;
+  margin:1% 0%;
+  padding:0.6% 0%;
+  color:gray;
+  font-size:1em;
+  }
+  
+  .footer .row a{
+  text-decoration:none;
+  color:gray;
+  transition:0.5s;
+  }
+  
+  .footer .row a:hover{
+  color:#fff;
+  }
+  
+  .footer .row ul{
+  width:100%;
+  }
+  
+  .footer .row ul li{
+  display:inline-block;
+  margin:0px 30px;
+  }
+  
+  .footer .row a i{
+  font-size:2em;
+  margin:0% 1%;
+  }
 
-        .footer {
-            background: #000;
-            padding: 30px 0px;
-            text-align: center;
-        }
-
-        .footer .row {
-            width: 100%;
-            margin: 1% 0%;
-            padding: 0.6% 0%;
-            color: gray;
-            font-size: 1em;
-        }
-
-        .footer .row a {
-            text-decoration: none;
-            color: gray;
-            transition: 0.5s;
-        }
-
-        .footer .row a:hover {
-            color: #fff;
-        }
-
-        .footer .row ul {
-            width: 100%;
-        }
-
-        .footer .row ul li {
-            display: inline-block;
-            margin: 0px 30px;
-        }
-
-        .footer .row a i {
-            font-size: 2em;
-            margin: 0% 1%;
-        }
     </style>
 </head>
 
@@ -236,7 +206,7 @@
                 <img src="{{imageUrl}}" alt="{{name}}" width="200">
             </a>
 
-            <h2 class="productname">{{name}}</h2>
+            <h2>{{name}}</h2>
             <p class="price">Price: INR {{price}}</p>
             {{!-- <p>Description: {{description}}</p> --}}
             <div class="size-and-quantity-container">
@@ -268,6 +238,8 @@
                 </div>
             </div>
 
+
+            <!-- Add a form for each product -->
 
         </div>
         {{/each}}
@@ -331,7 +303,7 @@
     </script>
 
 
-    <script src="/js/scripts.js"></script>
+
 </body>
 
 </html>
