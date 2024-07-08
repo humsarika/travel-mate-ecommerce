@@ -114,11 +114,6 @@ passport.deserializeUser((id, done) => {
 // app.get(path , callback function)
 
 
-// // test hbs
-// app.get('/profile', (req, res) => {
-//   console.log(req.user); // Log the user object to inspect its contents
-//   res.render('test', { user: req.user }); // Render your template with `req.user` passed as data
-// });
 
 // display home page
 app.get("/", (req, res) => {
