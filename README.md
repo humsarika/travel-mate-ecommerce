@@ -1,6 +1,6 @@
 # Travel-Mate E-commerce
 
-This is a simple e-commerce project built using Node.js, Express, MongoDB, and HTML/CSS. The project allows users to login, signup, logout, browse products, add them to their cart.
+This is a simple e-commerce project built using Node.js, Express, MongoDB, and HTML/CSS. The project allows users to login, signup, logout, browse products, add them to their cart, and remove product from cart. When a user login then web app greet user by their name.
 
 ## Prerequisites
 
