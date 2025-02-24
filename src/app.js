@@ -207,15 +207,18 @@ const authenticateUser = (req, res, next) => {
 
 app.get("/shoppingcart", authenticateUser, async (req, res) => {
   console.log("User:", req.user); // Debugging: Check if req.user exists
+
   if (!req.isAuthenticated()) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
   try {
-    const userId = req.user ? req.user._id: null;
+    const userId = req.session.passport?.user?.toString(); 
+console.log("Extracted userId:", userId);
+
 
     // Fetch the cart items for the user and populate product details
-    const cart = await cartItem.findOne({ userId }).populate({
+    const cart = await cartItem.findOne({ userId: req.user._id }).populate({
       path: "items.productId",
       select: "name price imageUrl",
     });
@@ -337,7 +340,9 @@ app.post("/add-to-cart", async (req, res) => {
   }
 
   // console.log("User:", req.user.name);
-  const userId = req.user._id; 
+  const userId = req.session.passport?.user?.toString(); 
+console.log("Extracted userId from add to cart route:", userId);
+
 
   const {productId, size, quantity, price } = req.body;
   console.log("Request to add to cart:", req.body);
