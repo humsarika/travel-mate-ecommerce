@@ -45,6 +45,7 @@ app.use(authMiddleware);
 const secretKey = crypto.randomBytes(6).toString("hex");
 
 const MongoStore = require("connect-mongo");
+const { isNull } = require("util");
 
 app.use(
   session({
@@ -205,12 +206,13 @@ const authenticateUser = (req, res, next) => {
 };
 
 app.get("/shoppingcart", authenticateUser, async (req, res) => {
+  console.log("User:", req.user); // Debugging: Check if req.user exists
   if (!req.isAuthenticated()) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
   try {
-    const userId = req.user._id;
+    const userId = req.user ? req.user._id: null;
 
     // Fetch the cart items for the user and populate product details
     const cart = await cartItem.findOne({ userId }).populate({
