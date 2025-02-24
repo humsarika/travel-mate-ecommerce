@@ -44,11 +44,17 @@ app.use(authMiddleware);
 
 const secretKey = crypto.randomBytes(6).toString("hex");
 
+const MongoStore = require("connect-mongo");
+
 app.use(
   session({
     secret: secretKey,
-    resave: false, //not saving session data if nothing has changed
-    saveUninitialized: true, // Saving session data for new sessions
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.ATLAS_URI,
+      ttl: 14 * 24 * 60 * 60, // 14 days session expiry
+    }),
   })
 );
 
@@ -322,6 +328,7 @@ app.get("/logout", (req, res) => {
 //add-to-cart route
 app.post("/add-to-cart", async (req, res) => {
   console.log("User:", req.user.name);
+  const userId = req.user._id; 
 
   const {productId, size, quantity, price } = req.body;
   console.log("Request to add to cart:", req.body);

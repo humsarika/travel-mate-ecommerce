@@ -34,7 +34,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 5%;
+  padding: 4px;
   position: fixed;
   top: 0;
   left: 0;
@@ -47,8 +47,9 @@ nav a {
   font-size: 1.6rem;
   color: #000;
 }
+
 /* hello msg to user */
-.hellomsg{
+.hellomsg {
   padding-top: 10%;
   font-size: 3rem;
   max-width: 70%;
@@ -56,6 +57,7 @@ nav a {
   padding-left: 10%;
 
 }
+
 .herocap {
   /* padding-top: 13%; */
   font-size: 4.5rem;
@@ -130,49 +132,63 @@ nav a {
 }
 
 .quote {
-  font-size: 3rem;
-  padding: 5%;
-  
-  background: #000000;
+  /* display grid 3 in a row for desktop 1980 x 1080 */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+  padding: 8%;
+
+  background-color: #000;
 }
-.footer{
-  background:#000;
-  padding:30px 0px;
-  text-align:center;
+@media (max-width:1500px ){
+  .quote {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    padding: 8%;
+    background-color: #000;
   }
-  
-  .footer .row{
-  width:100%;
-  margin:1% 0%;
-  padding:0.6% 0%;
-  color:gray;
-  font-size:1em;
-  }
-  
-  .footer .row a{
-  text-decoration:none;
-  color:gray;
-  transition:0.5s;
-  }
-  
-  .footer .row a:hover{
-  color:#fff;
-  }
-  
-  
-  .footer .row ul{
-  width:100%;
-  }
-  
-  .footer .row ul li{
-  display:inline-block;
-  margin:0px 30px;
-  }
-  
-  .footer .row a i{
-  font-size:2em;
-  margin:0% 1%;
-  }
+
+}
+
+.footer {
+  background: #000;
+  padding: 30px 0px;
+  text-align: center;
+}
+
+.footer .row {
+  width: 100%;
+  margin: 1% 0%;
+  padding: 0.6% 0%;
+  color: gray;
+  font-size: 1em;
+}
+
+.footer .row a {
+  text-decoration: none;
+  color: gray;
+  transition: 0.5s;
+}
+
+.footer .row a:hover {
+  color: #fff;
+}
+
+
+.footer .row ul {
+  width: 100%;
+}
+
+.footer .row ul li {
+  display: inline-block;
+  margin: 0px 30px;
+}
+
+.footer .row a i {
+  font-size: 2em;
+  margin: 0% 1%;
+}
 
 .right {
   margin-left: 5%;
@@ -437,12 +453,13 @@ span {
   max-width: 1000px;
   border-radius: 15px;
   padding: 20px;
-  margin:20px ;
+  margin: 20px;
 }
-.about .abtimg{
+
+.about .abtimg {
   border: none;
   border-radius: 10px;
-  
+
 }
 
 
@@ -454,6 +471,7 @@ span {
   align-items: center;
 
 }
+
 .about img {
   height: 420px;
   width: 320px;
@@ -875,11 +893,11 @@ h6 {
 button {
   background-color: #f4a033;
   color: #fff;
-  padding: 13px 30px;
+  padding: 13px 2bu0px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 64%;
+  width: 100%;
   font-size: 18px;
 }
 
@@ -1097,7 +1115,8 @@ section div:nth-child(4)>span.active {
   display: none;
 }
 
-/* ---------------------cart end----------------------- */ */
+/* ---------------------cart end----------------------- */
+*/
 /* -----------------------------item-------------------- */
 
 /* -----------------------------item-end-------------------- */
