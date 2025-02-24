@@ -20,7 +20,7 @@ const cartRoutes = require("./routes/cart");
 const bcrypt = require('bcrypt');
 const app = express();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 
 // setting the path for css file
@@ -360,7 +360,7 @@ app.post("/add-to-cart", async (req, res) => {
       };
 
       cart.items.push(newCartItem);
-      console.log("item added to " + req.user.name + "'s cart successfully: ")
+      console.log("item added to " + req.user.name + " "+ userId + "'s cart successfully: ")
     }
 
     // Update the total price
