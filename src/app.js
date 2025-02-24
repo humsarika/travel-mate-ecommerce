@@ -327,7 +327,13 @@ app.get("/logout", (req, res) => {
 
 //add-to-cart route
 app.post("/add-to-cart", async (req, res) => {
-  console.log("User:", req.user.name);
+  console.log("User:", req.user); // Debugging: Check if req.user exists
+
+  if (!req.user) {
+    return res.status(401).json({ error: "User not authenticated" });
+  }
+
+  // console.log("User:", req.user.name);
   const userId = req.user._id; 
 
   const {productId, size, quantity, price } = req.body;
