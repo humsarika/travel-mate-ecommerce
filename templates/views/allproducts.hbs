@@ -259,14 +259,14 @@
                         const form = event.target.closest('.addToCartForm');
 
                         // Get values from the form
-                        const userId = form.querySelector('[name="userId"]').value;
+                        {{!-- const userId = form.querySelector('[name="userId"]').value; --}}
                         const productId = form.querySelector('[name="productId"]').value;
                         const size = form.querySelector('[name="size"]').value;
                         const quantity = form.querySelector('[name="quantity"]').value;
                         const price = form.querySelector('[name="price"]').value;
 
                         // Log or send these values to your server as needed
-                        console.log('User ID:', userId);
+                        {{!-- console.log('User ID:', userId); --}}
                         console.log('Product ID:', productId);
                         console.log('Size:', size);
                         console.log('Quantity:', quantity);
@@ -279,7 +279,6 @@
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify({
-                                userId,
                                 productId,
                                 size,
                                 quantity,
