@@ -49,11 +49,12 @@ const MongoStore = require("connect-mongo");
 app.use(
   session({
     secret: secretKey,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl: process.env.ATLAS_URI,
       ttl: 14 * 24 * 60 * 60, // 14 days session expiry
+      autoRemove: "native"
     }),
   })
 );
