@@ -17,7 +17,7 @@ const crypto = require("crypto");
 const methodOverride = require("method-override");
 const cartRoutes = require("./routes/cart");
 
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const app = express();
 
 const port = process.env.PORT || 4000;
@@ -40,18 +40,18 @@ app.set("view engine", "hbs");
 app.set("views", templatepath);
 hbs.registerPartials(partialpath);
 app.use(flash());
-app.use(authMiddleware);
 
-const secretKey = crypto.randomBytes(6).toString("hex");
+
+// const secretKey = crypto.randomBytes(6).toString("hex");
 
 const MongoStore = require("connect-mongo");
 const { isNull } = require("util");
 
 app.use(
   session({
-    secret: secretKey,
-    resave: true,
-    saveUninitialized: true,
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: process.env.ATLAS_URI,
       ttl: 14 * 24 * 60 * 60, // 14 days session expiry
@@ -151,11 +151,12 @@ app.get("/signup", (req, res) => {
 // Creating a route to retrieve and display products
 app.get("/products", (req, res) => {
   Product.find({})
-    .limit(50)
+    .limit(20)
     .then((products) => {
       res.render("allproducts", {
         products,
         isAuthenticated: req.isAuthenticated(),
+        userId: req.user ? req.user._id : null, // Add userId to the context
       });
 
       // res.json(products); // res.json() to send JSON response
@@ -179,6 +180,7 @@ app.get("/products/:category", async (req, res) => {
       products,
       currentCategory: category,
       isAuthenticated: req.isAuthenticated(),
+      userId: req.user ? req.user._id : null,
     });
   } catch (err) {
     console.error("Error retrieving products:", err);
@@ -331,25 +333,22 @@ app.get("/logout", (req, res) => {
   });
 });
 
-//add-to-cart route
 app.post("/add-to-cart", async (req, res) => {
-  console.log("User:", req.user); // Debugging: Check if req.user exists
+  // console.log("User:", req.user); // Debugging: Check if req.user exists
 
   if (!req.user) {
     return res.status(401).json({ error: "User not authenticated" });
   }
 
-  // console.log("User:", req.user.name);
-  const userId = req.session.passport?.user?.toString(); 
-console.log("Extracted userId from add to cart route:", userId);
-
-
-  const {productId, size, quantity, price } = req.body;
+  const { userId, productId, size, quantity, price } = req.body;
+  // const userId = req.user._id; // Use the authenticated user's ID
   console.log("Request to add to cart:", req.body);
+  // console.log("Authenticated user ID:", userId.toString());
+  console.log("user ID extracted from body", userId);
 
   try {
     // Find or create user's cart
-    let cart = await cartItem.findOne({ userId });
+    let cart = await cartItem.findOne({ userId: userId });
 
     if (!cart) {
       cart = new cartItem({ userId });
@@ -357,7 +356,7 @@ console.log("Extracted userId from add to cart route:", userId);
 
     // Checking if the product is already in the user's cart
     const existingCartItem = cart.items.find(
-      (item) => item.productId === productId && item.size === size
+      (item) => item.productId.toString() === productId && item.size === size
     );
 
     if (existingCartItem) {
@@ -374,7 +373,7 @@ console.log("Extracted userId from add to cart route:", userId);
       };
 
       cart.items.push(newCartItem);
-      console.log("item added to " + req.user.name + " "+ userId + "'s cart successfully: ")
+      console.log("Item added to " + req.user.name + " " + userId + "'s cart successfully: ");
     }
 
     // Update the total price
